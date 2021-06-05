@@ -1,0 +1,25 @@
+{
+  "name": "node-sharp-api",
+  "version": "1.0.0",
+  "description": "Node API to optimize images for web, with JPEG, WebP & AVIF support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dr-useless/node-sharp-api.git"
+  },
+  "author": "Joseph Innes <github.com/dr-useless>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dr-useless/node-sharp-api/issues"
+  },
+  "homepage": "https://github.com/dr-useless/node-sharo-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "sharp": "^0.28.3"
+  }
+}
