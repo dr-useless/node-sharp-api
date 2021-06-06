@@ -1,7 +1,7 @@
 {
   "name": "node-sharp-api",
   "version": "1.0.0",
-  "description": "Node API to optimize images for web, with JPEG, WebP & AVIF support",
+  "description": "Node server to handle image processing using sharp ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
