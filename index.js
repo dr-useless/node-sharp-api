@@ -1,18 +1,15 @@
-const express = require("express");
-const multer  = require("multer");
+const http = require('http');
 const sharp = require("sharp");
-
-const appPort = 3002;
-const app = express();
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 const authToken = process.env.NODE_SHARP_API_AUTH;
 
-app.post("/", upload.single("input-file"), (req, res, next) => {
+const port = 3002;
+
+const requestListener = (req, res) => {
+
   res.setHeader("content-type", "text/plain");
 
-  const reqAuth = req.get("authorization");
+  const reqAuth = req.headers["authorization"];
   if (!reqAuth || reqAuth.replace('Bearer ', '') !== authToken) {
     res.statusCode = 401;
   }
@@ -23,7 +20,7 @@ app.post("/", upload.single("input-file"), (req, res, next) => {
     return;
   }
 
-  let accept = req.get("accept");
+  let accept = req.headers["accept"];
   if (!accept) {
     res.statusCode = 400
     res.end("Bad request");
@@ -31,35 +28,41 @@ app.post("/", upload.single("input-file"), (req, res, next) => {
   }
 
   accept = accept.toLowerCase().split("/");
-  if (!req.file || !accept || accept.length !== 2 || accept[0] !== "image") {
+  if (!accept || accept.length !== 2 || accept[0] !== "image") {
     res.statusCode = 400;
     res.end("Bad request");
     return;
   }
 
-  const optionsHeader = req.get("options");
+  const optionsHeader = req.headers["options"];
   let options;
   if (optionsHeader) {
     try {
-      options = JSON.PARSE(optionsHeader);
+      options = JSON.parse(optionsHeader);
     } catch {
     }
   }
 
-  try {
-    let input = sharp(req.file.buffer).toFormat(accept[1], options);
-    return input.toBuffer().then(buffer => {
-      res.setHeader("content-type", `${accept[0]}/${accept[1]}`);
-      res.setHeader("content-length", buffer.byteLength);
-      res.statusCode = 200;
-      res.end(buffer);
-    });
-  } catch {
-    res.statusCode = 500;
-    res.end("Failed");
-  }
-});
+  let body = [];
+  req.on('data', (chunk) => {
+    body.push(chunk);
+  }).on('end', () => {
+    body = Buffer.concat(body);
+    try {
+      let input = sharp(body).toFormat(accept[1], options);
+      return input.toBuffer().then(buffer => {
+        res.setHeader("content-type", `${accept[0]}/${accept[1]}`);
+        res.setHeader("content-length", buffer.byteLength);
+        res.statusCode = 200;
+        res.end(buffer);
+      });
+    } catch {
+      res.statusCode = 500;
+      res.end("Failed");
+    }
+  });
+}
 
-app.listen(appPort, () => {
-  console.log(`Listening on localhost:${appPort}`);
-});
+const server = http.createServer(requestListener);
+server.listen(port);
+console.log(`Listening on localhost:${port}`);
