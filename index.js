@@ -1,12 +1,12 @@
-const http = require('http');
+const https = require('https');
 const sharp = require("sharp");
+const fs = require("fs");
 
 const authToken = process.env.NODE_SHARP_API_AUTH;
 
 const port = 3002;
 
 const requestListener = (req, res) => {
-
   res.setHeader("content-type", "text/plain");
 
   const reqAuth = req.headers["authorization"];
@@ -63,6 +63,8 @@ const requestListener = (req, res) => {
   });
 }
 
-const server = http.createServer(requestListener);
+const httpsServerOptions = require(process.argv[2]);
+
+const server = https.createServer(httpsServerOptions, requestListener);
 server.listen(port);
 console.log(`Listening on localhost:${port}`);
