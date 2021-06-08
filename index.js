@@ -1,6 +1,5 @@
-const https = require('https');
+const https = require("https");
 const sharp = require("sharp");
-const fs = require("fs");
 
 const authToken = process.env.NODE_SHARP_API_AUTH;
 
@@ -10,7 +9,7 @@ const requestListener = (req, res) => {
   res.setHeader("content-type", "text/plain");
 
   const reqAuth = req.headers["authorization"];
-  if (!reqAuth || reqAuth.replace('Bearer ', '') !== authToken) {
+  if (!reqAuth || reqAuth.replace("Bearer ", "") !== authToken) {
     res.statusCode = 401;
   }
 
@@ -44,9 +43,9 @@ const requestListener = (req, res) => {
   }
 
   let body = [];
-  req.on('data', (chunk) => {
+  req.on("data", (chunk) => {
     body.push(chunk);
-  }).on('end', () => {
+  }).on("end", () => {
     body = Buffer.concat(body);
     try {
       let input = sharp(body).toFormat(accept[1], options);
@@ -63,7 +62,9 @@ const requestListener = (req, res) => {
   });
 }
 
-const httpsServerOptions = require(process.argv[2]);
+const httpsServerOptions = require(process.argv[2] || "./config.js");
+
+console.log("HTTPS server options", httpsServerOptions);
 
 const server = https.createServer(httpsServerOptions, requestListener);
 server.listen(port);
