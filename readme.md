@@ -1,4 +1,4 @@
-# node-sharp-api
+# sharp-server
 
 ## Convert any image with a HTTP POST request
 Send a HTTP POST request.
