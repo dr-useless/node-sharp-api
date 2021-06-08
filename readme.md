@@ -6,18 +6,12 @@ Send a HTTP POST request.
 ### Example
 ` 
 ```javascript
-const formData = new FormData();
-
-
-fetch(imageOptimizerAddress,{
+fetch("my.domain.io",{
     method: "POST",
     headers: {
-      "content-type": sourceType,
-      "user-agent": "cloudflare-worker-nsphoto-media-store",
-      "accept": targetType,
-      "authorization": `Bearer ${imageOptimizerAuth}`
+      "content-type": "image/jpeg",
+      "accept": "image/avif"
     },
-    body: data
+    body: arrayBuffer
   });
-
 ```
