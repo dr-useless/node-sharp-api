@@ -1,16 +1,18 @@
 const https = require("https");
 const sharp = require("sharp");
 
-const authToken = process.env.NODE_SHARP_API_AUTH;
-
 const port = 3002;
 
 const requestListener = (req, res) => {
+  res.setHeader("access-control-allow-origin", "*");
+  res.setHeader("access-control-allow-headers", "*")
   res.setHeader("content-type", "text/plain");
 
-  const reqAuth = req.headers["authorization"];
-  if (!reqAuth || reqAuth.replace("Bearer ", "") !== authToken) {
-    res.statusCode = 401;
+  if (req.method === "OPTIONS") {
+    res.statusCode = 200;
+    res.setHeader("access-control-allow-methods", "POST, OPTIONS");
+    res.end();
+    return;
   }
 
   if (req.method !== "POST") {
@@ -33,14 +35,24 @@ const requestListener = (req, res) => {
     return;
   }
 
-  const optionsHeader = req.headers["options"];
-  let options;
-  if (optionsHeader) {
+  const outputOptionsHeader = req.headers["output-options"];
+  let outputOptions;
+  if (outputOptionsHeader) {
     try {
-      options = JSON.parse(optionsHeader);
+      outputOptions = JSON.parse(outputOptionsHeader);
     } catch {
     }
   }
+
+  const resizeOptionsHeader = req.headers["resize-options"];
+  let resizeOptions;
+  if (resizeOptionsHeader) {
+    try {
+      resizeOptions = JSON.parse(resizeOptionsHeader);
+    } catch {
+    }
+  }
+
 
   let body = [];
   req.on("data", (chunk) => {
@@ -48,7 +60,11 @@ const requestListener = (req, res) => {
   }).on("end", () => {
     body = Buffer.concat(body);
     try {
-      let input = sharp(body).toFormat(accept[1], options);
+      let input = sharp(body);
+      if (resizeOptions) {
+        input = input.resize(resizeOptions);
+      }
+      input.toFormat(accept[1], outputOptions);
       return input.toBuffer().then(buffer => {
         res.setHeader("content-type", `${accept[0]}/${accept[1]}`);
         res.setHeader("content-length", buffer.byteLength);
