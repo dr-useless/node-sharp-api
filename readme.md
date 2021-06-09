@@ -5,6 +5,25 @@
 - Let [sharp](https://github.com/lovell/sharp) convert/optimize your image
 - Do something with the response
 
+## Server configuration
+This repo uses a node https server. You should export an object with at least a `key` & `cert` from your `config.js`.
+See (how to create node https server)[https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/] for more details.
+
+### Basic
+```javascript
+const fs = require("fs");
+
+const options = {
+  key: fs.readFileSync("./privkey.pem"),
+  cert: fs.readFileSync("./cert.pem")
+};
+
+module.exports = options;
+```
+
+## Start server
+`npm run start /path/to/my/config.js`
+
 ## Accept
 Set the `accept` header with the desired output MIME type.
 e.g. `"accept": "image/webp"`
