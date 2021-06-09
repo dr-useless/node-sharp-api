@@ -2,7 +2,7 @@
 
 ## Convert any image with a HTTP POST request
 - Send a HTTP POST request
-- Let [https://github.com/lovell/sharp]sharp convert/optimize your image
+- Let [sharp](https://github.com/lovell/sharp) convert/optimize your image
 - Do something with the response
 
 ## Accept
@@ -12,10 +12,10 @@ e.g. `"accept": "image/webp"`
 ## Options
 
 ### Resize
-Set the `resize-options` header, with a JSON string of [sharp resize options]: https://sharp.pixelplumbing.com/api-resize.
+Set the `resize-options` header, with a JSON string of [sharp resize options](https://sharp.pixelplumbing.com/api-resize).
 
 ### Output
-Set the `output-options` header, with a JSON string of [sharp output options]: https://sharp.pixelplumbing.com/api-output
+Set the `output-options` header, with a JSON string of [sharp output options](https://sharp.pixelplumbing.com/api-output)
 relevant to the output type set in `accept` header. 
 
 ## Example usage
