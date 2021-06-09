@@ -5,6 +5,19 @@
 - Let [sharp]:https://github.com/lovell/sharp convert/optimize your image
 - Do something with the response
 
+## Accept
+Set the `accept` header with the desired output MIME type.
+e.g. `"accept": "image/webp"`
+
+## Options
+
+### Resize
+Set the `resize-options` header, with a JSON string of [sharp resize options]: https://sharp.pixelplumbing.com/api-resize.
+
+### Output
+Set the `output-options` header, with a JSON string of [sharp output options]: https://sharp.pixelplumbing.com/api-output
+relevant to the output type set in `accept` header. 
+
 ## Example usage
 ### Using defaults
 ```javascript
