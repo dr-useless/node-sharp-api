@@ -1,7 +1,9 @@
 # sharp-server
 
 ## Convert any image with a HTTP POST request
-Send a HTTP POST request.
+- Send a HTTP POST request
+- Let [sharp]:https://github.com/lovell/sharp convert/optimize your image
+- Do something with the response
 
 ## Example usage
 ### Using defaults
