@@ -1,5 +1,5 @@
 {
-  "name": "node-sharp-api",
+  "name": "sharp-server",
   "version": "1.0.0",
   "description": "Node server to handle image processing using sharp",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dr-useless/node-sharp-api.git"
+    "url": "git+https://github.com/dr-useless/sharp-server.git"
   },
   "author": "Joseph Innes <github.com/dr-useless>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dr-useless/node-sharp-api/issues"
+    "url": "https://github.com/dr-useless/sharp-server/issues"
   },
-  "homepage": "https://github.com/dr-useless/node-sharo-api#readme",
+  "homepage": "https://github.com/dr-useless/sharp-server#readme",
   "dependencies": {
     "sharp": "^0.28.3"
   }
