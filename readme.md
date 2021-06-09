@@ -6,8 +6,10 @@
 - Do something with the response
 
 ## Server configuration
-This repo uses a node HTTPS server. You should export an object with at least a `key` & `cert` from your `config.js`.
-See (how to create node https server)[https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/] for more details.
+This repo uses a node HTTPS server.
+You should export an object with at least a `key` & `cert` from your `config.js`.
+
+See [how to create node HTTPS server](https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/) for more details.
 
 ### Basic
 ```javascript
