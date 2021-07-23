@@ -1,8 +1,8 @@
 const fs = require("fs");
 
 const options = {
-  key: fs.readFileSync("./privkey.pem"),
-  cert: fs.readFileSync("./cert.pem")
+  key: fs.readFileSync("./ECC-privkey.pem"),
+  cert: fs.readFileSync("./ECC-cert.pem")
 };
 
 module.exports = options;
